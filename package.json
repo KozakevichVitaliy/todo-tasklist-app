@@ -2,9 +2,12 @@
   "name": "todos-express-nodejs-project",
   "version": "1.0.0",
   "description": "todo-tasklist-on-nodejs",
+  "engines": {
+    "node": "12.11.1"
+  },
   "main": "index.js",
   "scripts": {
-    "start": "node index",
+    "start": "node index.js",
     "dev": "nodemon index.js"
   },
   "keywords": [
