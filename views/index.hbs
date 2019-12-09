@@ -1,0 +1,53 @@
+<h2>Todos page</h2>
+
+{{#if todos.length}}
+<ul>
+    {{#each todos}}
+    <li class="todo">
+        <form action="/complete" method="POST">
+            <label>
+                {{#if completed}}
+                <input type="checkbox" checked name="completed">
+                <span class="completed">{{title}}</span>
+                {{else}}
+                <input type="checkbox" name="completed">
+                <span>{{title}}</span>
+                {{/if}}
+
+                <input type="hidden" value="{{_id}}" name="id" />
+
+                <button id="{{_id}}" class="btn btn-small btn-delete red">Delete</button>
+                <button class="btn btn-small" type="submit">Save</button>
+            </label>
+        </form>
+    </li>
+    {{/each}}
+</ul>
+
+{{else}}
+<p>
+    <h4>No todos!</h4>
+</p>
+{{/if}}
+<script>
+    let deleteBtns = document.querySelectorAll('.red');
+
+    function listener(e) {
+        e.preventDefault();
+        deleteTask(e.currentTarget.id)
+
+        function deleteTask(id) {
+            return fetch(`/${id}`, { method: 'DELETE' })
+                .then(res => res.json())
+                .then(res => {
+                    console.log('Deleted:', res.message)
+                    return res
+                })
+                .catch(err => console.error(err))
+        }
+        location.reload(true);
+    }
+    for (let i = 0; i < deleteBtns.length; i++) {
+        deleteBtns[i].addEventListener("click", listener);
+    }
+</script>
